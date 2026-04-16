@@ -4,6 +4,11 @@
 #include <utility>
 #include <vector>
 
+bool check_keyword(std::string word) {
+    if (word == "FROM" || word == "SELECT" || word == "WHERE") return true;
+    else return false;
+}
+
 void parse_command(std::string command) {
     std::stringstream ss {command};
 
@@ -15,7 +20,7 @@ void parse_command(std::string command) {
 
     for (std::string partition : command_splited) {
         std::string temp { "" };
-        std::pair<std::string, std::string> pair;
+        std::pair<std::string, std::string> pair { "", "" };
         bool first_element = true;
 
         for (char character : partition) {
@@ -30,6 +35,7 @@ void parse_command(std::string command) {
     }
 
     for (auto pair : command_parsed) {
-        TODO;
+        if (pair.second == "") return {};
+        else if (!check_keyword(pair.first)) return {};
     }
 }

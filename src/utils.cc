@@ -5,6 +5,25 @@
 #include <vector>
 #include <iostream>
 
+std::string trim_string(std::string word) {
+    std::string string_trimmed { "" };
+    int index_start = 0, index_end = word.length() - 1;
+
+    for (char character : word) {
+        if (character != ' ') break;
+        else index_start++;
+    }
+
+    for (int i = index_end; i > index_start; i--) {
+        if (word[i] == ' ') index_end--;
+        else break;
+    }
+
+    for (int i = index_start; i <= index_end; i++) string_trimmed += word[i];
+
+    return string_trimmed;
+}
+
 bool check_keyword(std::string word) {
     if (word == "FROM" || word == "SELECT" || word == "WHERE") return true;
     else return false;
@@ -15,7 +34,7 @@ std::vector<std::pair<std::string, std::string>> parse_command(std::string comma
 
     std::vector<std::string> command_splited;
 
-    while (std::getline(ss, command, DELIMITER)) command_splited.push_back(command + ' ');
+    while (std::getline(ss, command, DELIMITER)) command_splited.push_back(trim_string(command) + ' ');
 
     std::vector<std::pair<std::string, std::string>> command_parsed;
 
@@ -33,7 +52,7 @@ std::vector<std::pair<std::string, std::string>> parse_command(std::string comma
                 if (first_element) pair.first = temp;
                 else pair.second = temp;
                 first_element = false;
-                std::cout << "Temp: " << temp << std::endl;
+                std::cout << "Temp: " << '\'' << temp << '\'' << std::endl;
                 temp = "";
             }
         }

@@ -15,13 +15,11 @@ int main() {
         std::cout << "Command parsed is empty" << std::endl;
     }
 
-    for (auto map : command_parsed) {
-        for (auto it = map.begin(); it != map.end(); it++){
-            std::cout << "Key:" << '\'' << it->first << '\'' << std::endl;
+    for (auto it = command_parsed.begin(); it != command_parsed.end(); it++) {
+        std::cout << "Key:" << '\'' << it->first << '\'' << std::endl;
 
-            for (std::string value : it->second) {
-                std::cout << "Values:" << '\'' << value << '\'' << std::endl;
-            }
+        for (std::string value : it->second) {
+            std::cout << "Values:" << '\'' << value << '\'' << std::endl;
         }
     }
 

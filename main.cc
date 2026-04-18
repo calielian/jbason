@@ -7,18 +7,20 @@
 
 int main() {
 
-    std::string test = "FROM table; ";
+    std::string test = "FROM table; SELECT column; WHERE column = value; ";
 
     auto command_parsed = parse_command(trim_string(test));
 
-    for (auto pair : command_parsed) {
-        for (auto map : command_parsed) {
-            for (auto it = map.begin(); it != map.end(); it++){
-                std::cout << "Key:" << '\'' << it->first << '\'' << std::endl;
+    if (command_parsed.empty()) {
+        std::cout << "Command parsed is empty" << std::endl;
+    }
 
-                for (std::string value : it->second) {
-                    std::cout << "Values:" << '\'' << value << '\'' << std::endl;
-                }
+    for (auto map : command_parsed) {
+        for (auto it = map.begin(); it != map.end(); it++){
+            std::cout << "Key:" << '\'' << it->first << '\'' << std::endl;
+
+            for (std::string value : it->second) {
+                std::cout << "Values:" << '\'' << value << '\'' << std::endl;
             }
         }
     }

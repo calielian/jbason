@@ -57,13 +57,13 @@ std::vector<std::map<std::string, std::vector<std::string>>> parse_command(std::
             char character = partition[i];
             temp += character;
 
-            if (character == ' ') {
+            if (character == ' ' || character == '=') {
                 temp.pop_back();
 
                 if (first_element) {
                     key = temp;
                     first_element = false;
-                } else values.push_back(temp);
+                } else if (!temp.empty()) values.push_back(temp);
                 
                 std::cout << "Temp: " << '\'' << temp << '\'' << std::endl;
                 temp = "";
@@ -74,8 +74,6 @@ std::vector<std::map<std::string, std::vector<std::string>>> parse_command(std::
 
         command_parsed.push_back(map);
     }
-
-    
 
     // checks if very value is not empty or if key of the map contains a valid keyword
     for (auto map : command_parsed) {

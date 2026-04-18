@@ -5,21 +5,26 @@
 #include <vector>
 #include <iostream>
 
-std::string trim_string(std::string word) {
+std::string trim_string(std::string string) {
     std::string string_trimmed { "" };
-    int index_start = 0, index_end = word.length() - 1;
+    int index_start = 0, index_end = string.length() - 1;
 
-    for (char character : word) {
+    // gets the index of the first character non-space
+    // (removes spaces from the start of the string)
+    for (char character : string) {
         if (character != ' ') break;
         else index_start++;
     }
 
+    // gets the index of the last character non-space
+    // (removes spaces from the end of the string)
     for (int i = index_end; i > index_start; i--) {
-        if (word[i] == ' ') index_end--;
+        if (string[i] == ' ') index_end--;
         else break;
     }
 
-    for (int i = index_start; i <= index_end; i++) string_trimmed += word[i];
+    // adds all character in the range of index_start to index_end
+    for (int i = index_start; i <= index_end; i++) string_trimmed += string[i];
 
     return string_trimmed;
 }
@@ -38,6 +43,7 @@ std::vector<std::pair<std::string, std::string>> parse_command(std::string comma
 
     std::vector<std::pair<std::string, std::string>> command_parsed;
 
+    // gets every partition to partition again and store them in a pair, to adds to command_parsed vector
     for (std::string partition : command_splited) {
         std::string temp { "" };
         std::pair<std::string, std::string> pair { "", "" };
@@ -63,6 +69,7 @@ std::vector<std::pair<std::string, std::string>> parse_command(std::string comma
         command_parsed.push_back({pair.first, pair.second});
     }
 
+    // checks if very pair contains a valid keyword
     for (auto pair : command_parsed) {
         std::cout << "pair.first check: " << pair.first << std::endl;
         std::cout << "pair.second check: " << pair.second << std::endl;

@@ -31,7 +31,7 @@ std::string trim_string(std::string string) {
 }
 
 bool check_keyword(std::string word) {
-    if (word == "FROM" || word == "SELECT" || word == "WHERE") return true;
+    if (word == "FROM" || word == "SELECT" || word == "WHERE" || word == "INSERT_INTO" || word == "VALUES") return true;
     else return false;
 }
 
@@ -44,10 +44,9 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
 
     std::map<std::string, std::vector<std::string>> command_parsed;
 
-    // gets every partition to partition again and store them in a pair, to adds to command_parsed vector
+    // gets every partition to partition again and store them in command_parsed
     for (std::string partition : command_splited) {
         std::string temp { "" }, key;
-        std::map<std::string, std::vector<std::string>> map;
         std::vector<std::string> values;
         bool first_element = true;
     
@@ -70,7 +69,7 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
             }
         }
 
-        map[key] = values;
+        command_parsed[key] = values;
     }
 
     // checks if very value is not empty or if key of the map contains a valid keyword

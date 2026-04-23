@@ -12,5 +12,6 @@
 std::string trim_string(std::string string);
 bool check_keyword(std::string word);
 std::map<std::string, std::vector<std::string>> parse_command(std::string command);
+std::string parse_insert(std::vector<std::string> command);
 
 #endif // UTILS

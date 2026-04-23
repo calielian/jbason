@@ -42,6 +42,11 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
 
     while (std::getline(ss, command, DELIMITER)) command_splited.push_back(trim_string(command) + ' ');
 
+    if (command_splited[0].find("INSERT_INTO") != std::string::npos) {
+        auto res = parse_insert(command_splited);
+        return { std::pair<std::string, std::vector<std::string>>("_insert_into", { res }  ) };
+    }
+
     std::map<std::string, std::vector<std::string>> command_parsed;
 
     // gets every partition to partition again and store them in command_parsed

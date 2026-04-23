@@ -7,7 +7,7 @@
 
 int main() {
 
-    std::string test = "FROM table; SELECT column; WHERE column = value";
+    std::string test = "INSERT_INTO table; VALUES {1, 2, 3, 4, 5, 6}";
 
     auto command_parsed = parse_command(trim_string(test));
 

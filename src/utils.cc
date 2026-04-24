@@ -44,7 +44,9 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
 
     if (command_splited[0].find("INSERT_INTO") != std::string::npos) {
         auto res = parse_insert(command_splited);
-        return { std::pair<std::string, std::vector<std::string>>("_insert_into", { res }  ) };
+        res["_insert_into"] = { "true" };
+
+        return res;
     }
 
     std::map<std::string, std::vector<std::string>> command_parsed;
@@ -81,6 +83,54 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
     for (auto iterator = command_parsed.begin(); iterator != command_parsed.end(); iterator++) {
         if (iterator->second.empty()) return {};
         else if (!check_keyword(iterator->first)) return {};
+    }
+
+    return command_parsed;
+}
+
+std::map<std::string, std::vector<std::string>> parse_insert(std::vector<std::string> command) {
+    std::map<std::string, std::vector<std::string>> command_parsed;
+    std::vector<std::string> values_to_insert;
+    std::string temp { "" }, key;
+    bool first_element = true;
+    int index;
+
+    const int VALUES_SIZE = command[1].length();
+
+    for (char character : command[0]) {
+        if (character != ' ') {
+            temp += character;
+        } else {
+            if (first_element) {
+                key = temp;
+                temp = "";
+                first_element = false;
+            } else {
+                command_parsed[key] = { temp };
+                temp = "";
+                key = "";
+            }
+        }
+    }
+
+    for (index = 0; index < command[1].length(); index++) {
+        char character = command[1][index];
+        if (character != ' ') {
+            temp += character;
+        } else {
+            index += 2;
+            key = temp;
+            temp = "";
+            break;
+        }
+    }
+
+    while (index < VALUES_SIZE) {
+        if (command[1][index] != ' ' && command[1][index] != ',') {
+            values_to_insert.push_back( { command[1][index] } );
+        } else if (command[1][index] == '}') {
+            command_parsed[key] = values_to_insert;
+        }
     }
 
     return command_parsed;

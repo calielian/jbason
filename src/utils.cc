@@ -6,6 +6,9 @@
 #include <iostream>
 #include <map>
 
+#define print(msg) std::cout << msg << std::endl
+#define print_var(msg, var) std::cout << msg << var << std::endl
+
 std::string trim_string(std::string string) {
     std::string string_trimmed { "" };
     int index_start = 0, index_end = string.length() - 1;
@@ -126,11 +129,16 @@ std::map<std::string, std::vector<std::string>> parse_insert(std::vector<std::st
     }
 
     while (index < VALUES_SIZE) {
+        if (command[1][index] == '}') {
+            command_parsed[key] = values_to_insert;
+            break;
+        }
+
         if (command[1][index] != ' ' && command[1][index] != ',') {
             values_to_insert.push_back( { command[1][index] } );
-        } else if (command[1][index] == '}') {
-            command_parsed[key] = values_to_insert;
         }
+
+        index++;
     }
 
     return command_parsed;

@@ -34,7 +34,7 @@ std::string trim_string(std::string string) {
 }
 
 bool check_keyword(std::string word) {
-    if (word == "FROM" || word == "SELECT" || word == "WHERE" || word == "INSERT_INTO" || word == "VALUES") return true;
+    if (word == "FROM" || word == "SELECT" || word == "WHERE" || word == "INSERT_INTO" || word == "VALUES" || word == "CREATE"  || word == "TYPE" || word == "COLUMNS") return true;
     else return false;
 }
 
@@ -47,7 +47,12 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
 
     if (command_splited[0].find("INSERT_INTO") != std::string::npos) {
         auto res = parse_insert(command_splited);
-        res["_insert_into"] = { "true" };
+        res["_executed_correctly"] = { "true" };
+
+        return res;
+    } else if (command_splited[0].find("CREATE") != std::string::npos) {
+        auto res = parse_create(command_splited);
+        res["_executed_correctly"] = { "true" };
 
         return res;
     }
@@ -142,4 +147,104 @@ std::map<std::string, std::vector<std::string>> parse_insert(std::vector<std::st
     }
 
     return command_parsed;
+}
+
+std::map<std::string, std::vector<std::string>> parse_create(std::vector<std::string> command) {
+    std::map<std::string, std::vector<std::string>> command_parsed;
+    std::vector<std::string> values;
+    std::string temp { "" }, key;
+    bool first_element = true;
+    int index = 0;
+
+    const int CREATE_INDEX = 0, TYPE_INDEX = 1, COLUMNS_INDEX = 2;
+    const int TYPE_SIZE = command[TYPE_INDEX].length(), COLUMNS_SIZE = command[COLUMNS_INDEX].length();
+
+    for (char character : command[CREATE_INDEX]) {
+        if (character != ' ') {
+            temp += character;
+        } else {
+            if (first_element) {
+                key = temp;
+                temp = "";
+                first_element = false;
+            } else {
+                command_parsed[key] = { temp };
+                temp = "";
+                key = "";
+            }
+        }
+    }
+
+    for (index = 0; index < TYPE_SIZE; index++) {
+        char character = command[TYPE_INDEX][index];
+
+        if (character != ' ') {
+            temp += character;
+        } else {
+            index += 2;
+            key = temp;
+            temp = "";
+            break;
+        }
+    }
+
+    while (index < TYPE_SIZE) {
+        char character = command[TYPE_INDEX][index];
+
+        if (character == '}') {
+            values.push_back(temp);
+            command_parsed[key] = values;
+            values.clear();
+            key = "";
+            temp = "";
+            break;
+        }
+
+        if (character != ' ' && character != ',') {
+            temp += character;
+        } else if (character == ',') {
+            values.push_back(temp);
+            temp = "";
+        }
+
+        index++;
+    }
+
+    for (index = 0; index < COLUMNS_SIZE; index++) {
+        char character = command[COLUMNS_INDEX][index];
+
+        if (character != ' ') {
+            temp += character;
+        } else {
+            index += 2;
+            key = temp;
+            temp = "";
+            break;
+        }
+    }
+
+    while (index < COLUMNS_SIZE) {
+        char character = command[COLUMNS_INDEX][index];
+
+        if (character == '}') {
+            values.push_back(temp);
+            command_parsed[key] = values;
+            values.clear();
+            key = "";
+            temp = "";
+            break;
+        }
+
+        if (character != ' ' && character != ',') {
+            temp += character;
+        } else if (character == ',') {
+            values.push_back(temp);
+            temp = "";
+        }
+
+        index++;
+    }
+
+    return command_parsed;
+
 }

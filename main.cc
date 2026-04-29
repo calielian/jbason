@@ -1,4 +1,5 @@
 #include "include/parse.hpp"
+#include "include/operations.hpp"
 #include <ncurses.h>
 #include <string>
 #include <utility>

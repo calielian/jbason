@@ -9,7 +9,7 @@
 int main() {
 
     std::string select_test = "FROM table; SELECT number; WHERE number = 10";
-    std::string insert_test = "INSERT_INTO table; VALUES {1, 2, 3, 4, 5, 6}";
+    std::string insert_test = "INSERT_INTO table; VALUES {1, john_doe, 3}";
     std::string create_test = "CREATE table; TYPE {int, string, int}; COLUMNS { number, name, other_number }";
 
     auto command_parsed = parse_command(trim_string(create_test));

@@ -38,7 +38,7 @@ bool check_keyword(std::string word) {
     else return false;
 }
 
-std::map<std::string, std::vector<std::string>> parse_command(std::string command) {
+COMMAND_PARSED_TYPE parse_command(std::string command) {
     std::stringstream ss {command};
 
     std::vector<std::string> command_splited;
@@ -57,7 +57,7 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
         return res;
     }
 
-    std::map<std::string, std::vector<std::string>> command_parsed;
+    COMMAND_PARSED_TYPE command_parsed;
 
     // gets every partition to partition again and store them in command_parsed
     for (std::string partition : command_splited) {
@@ -96,8 +96,8 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
     return command_parsed;
 }
 
-std::map<std::string, std::vector<std::string>> parse_insert(std::vector<std::string> command) {
-    std::map<std::string, std::vector<std::string>> command_parsed;
+COMMAND_PARSED_TYPE parse_insert(std::vector<std::string> command) {
+    COMMAND_PARSED_TYPE command_parsed;
     std::vector<std::string> values_to_insert;
     std::string temp { "" }, key;
     bool first_element = true;
@@ -149,8 +149,8 @@ std::map<std::string, std::vector<std::string>> parse_insert(std::vector<std::st
     return command_parsed;
 }
 
-std::map<std::string, std::vector<std::string>> parse_create(std::vector<std::string> command) {
-    std::map<std::string, std::vector<std::string>> command_parsed;
+COMMAND_PARSED_TYPE parse_create(std::vector<std::string> command) {
+    COMMAND_PARSED_TYPE command_parsed;
     std::vector<std::string> values;
     std::string temp { "" }, key;
     bool first_element = true;

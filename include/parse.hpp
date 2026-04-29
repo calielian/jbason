@@ -1,5 +1,5 @@
-#ifndef UTILS
-#define UTILS
+#ifndef PARSE_HPP
+#define PARSE_HPP
 
 #include <string>
 #include <vector>
@@ -15,4 +15,4 @@ std::map<std::string, std::vector<std::string>> parse_command(std::string comman
 std::map<std::string, std::vector<std::string>> parse_insert(std::vector<std::string> command);
 std::map<std::string, std::vector<std::string>> parse_create(std::vector<std::string> command);
 
-#endif // UTILS
+#endif // PARSE_HPP

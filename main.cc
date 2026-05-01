@@ -1,10 +1,10 @@
 #include "include/parse.hpp"
+#include "include/utils.hpp"
 #include "include/operations.hpp"
 #include <ncurses.h>
 #include <string>
 #include <utility>
 #include <iostream>
-
 
 int main() {
 
@@ -12,8 +12,11 @@ int main() {
     std::string insert_test = "INSERT_INTO table; VALUES {1, john_doe, 3}";
     std::string create_test = "CREATE table; TYPE {int, string, int}; COLUMNS { number, name, other_number }";
 
-    auto command_parsed = parse_command(trim_string(create_test));
+    insert_table("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(insert_test)));
 
+    //auto command_parsed = parse_command(trim_string(insert_test));
+    
+    /*
     if (command_parsed.empty()) {
         std::cout << "Command parsed is empty" << std::endl;
     }
@@ -25,6 +28,7 @@ int main() {
             std::cout << "Values:" << '\'' << value << '\'' << std::endl;
         }
     }
+    */
 
     return 0;
 }

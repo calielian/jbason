@@ -11,8 +11,6 @@
 
 #define COMMAND_PARSED_TYPE std::map<std::string, std::vector<std::string>>
 
-std::string trim_string(std::string string);
-bool check_keyword(std::string word);
 COMMAND_PARSED_TYPE parse_command(std::string command);
 COMMAND_PARSED_TYPE parse_insert(std::vector<std::string> command);
 COMMAND_PARSED_TYPE parse_create(std::vector<std::string> command);

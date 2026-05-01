@@ -15,4 +15,6 @@ bool create_database(std::string path, COMMAND_PARSED_TYPE command);
 
 bool insert_table(std::string path, COMMAND_PARSED_TYPE command);
 
+std::string select_column(std::string path, COMMAND_PARSED_TYPE command);
+
 #endif // OPERATIONS_HPP

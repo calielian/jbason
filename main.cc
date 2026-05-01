@@ -9,14 +9,18 @@
 int main() {
 
     std::string select_test = "FROM table; SELECT number; WHERE number = 10";
-    std::string insert_test = "INSERT_INTO table; VALUES {1, john_doe, 3}";
+    std::string insert_test = "INSERT_INTO table; VALUES {10, jane_doe, 40}";
     std::string create_test = "CREATE table; TYPE {int, string, int}; COLUMNS { number, name, other_number }";
 
-    insert_table("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(insert_test)));
+    std::cout << select_column("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(select_test))) << std::endl;
 
-    //auto command_parsed = parse_command(trim_string(insert_test));
-    
+    // std::cout << insert_table("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(insert_test))) << std::endl;
+
+    // std::cout << create_database("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(create_test))) << std::endl;
+
     /*
+    auto command_parsed = parse_command(trim_string(select_test));
+    
     if (command_parsed.empty()) {
         std::cout << "Command parsed is empty" << std::endl;
     }
@@ -29,6 +33,5 @@ int main() {
         }
     }
     */
-
     return 0;
 }

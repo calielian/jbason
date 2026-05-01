@@ -45,9 +45,10 @@ bool insert_table(std::string path, COMMAND_PARSED_TYPE command) {
 
     const std::string TABLE_NAME = command["INSERT_INTO"][0];
     const int VALUES_SIZE = command["VALUES"].size();
-    
+
+    json_archive.close();
     for (int i = 0; i < VALUES_SIZE; i++) {
-        if (!check_correct_value_type(command["VALUES"][i], database["columns_type"][i])) {
+        if (!check_correct_value_type(command["VALUES"][i], database[TABLE_NAME]["columns_type"][i])) {
             return false;
         } else {
             values_and_column_index[command["VALUES"][i]] = i;
@@ -55,8 +56,13 @@ bool insert_table(std::string path, COMMAND_PARSED_TYPE command) {
     }
 
     for (auto it = values_and_column_index.begin(); it != values_and_column_index.end(); it++) {
-        print(database.dump(4));
-        // database[TABLE_NAME][database[TABLE_NAME]["columns_name"][it->second]] = it->first;
+        database[TABLE_NAME][database[TABLE_NAME]["columns_names"][it->second]] = it->first;
+    }
+
+    std::ofstream json_archive_out {path};
+    if (json_archive_out.is_open()) {
+        json_archive_out << database.dump(4);
+        json_archive_out.close();
     }
 
     return true;

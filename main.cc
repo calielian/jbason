@@ -14,6 +14,20 @@ int main() {
 
     std::cout << select_column("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(select_test))) << std::endl;
 
+    char mesg[]="Alguma string";		
+    int row,col;				
+
+    initscr();				
+    getmaxyx(stdscr,row,col);		
+    mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
+
+    mvprintw(row-2,0,"Essa tela tem %d linhas e %d colunas\n",row,col);
+    printw("Tente redimensionar sua janela (se possível) e execute este programa novamente.");
+    refresh();
+    getch();
+    endwin();
+
+
     // std::cout << insert_table("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(insert_test))) << std::endl;
 
     // std::cout << create_database("/home/calielian/Pessoal/Prog/C++/Apps/jbason/test.json", parse_command(trim_string(create_test))) << std::endl;

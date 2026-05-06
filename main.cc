@@ -1,10 +1,12 @@
 #include "include/parse.hpp"
 #include "include/utils.hpp"
 #include "include/operations.hpp"
+#include "include/ui.hpp"
 #include <ncurses.h>
 #include <string>
 #include <utility>
 #include <iostream>
+#include <menu.h>
 
 int main() {
 
@@ -17,8 +19,14 @@ int main() {
     char mesg[]="Alguma string";		
     int row,col;				
 
-    initscr();				
-    getmaxyx(stdscr,row,col);		
+    initscr();
+    getmaxyx(stdscr,row,col);
+    draw_app_name();
+    move(row/2, 0);
+    MENU *menu = create_main_menu();
+    
+    post_menu(menu);
+    
     mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
 
     mvprintw(row-2,0,"Essa tela tem %d linhas e %d colunas\n",row,col);

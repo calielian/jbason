@@ -39,7 +39,7 @@ void draw_app_name() {
     refresh();
 }
 
-MENU *create_main_menu() {
+Menu::Menu() {
     const char *item_text_description[4][2] {
         // Item text, item description
         "Query table content", "Write SELECT statements",
@@ -48,11 +48,27 @@ MENU *create_main_menu() {
         "Create a new database", "Create a new database"
     };
 
-    ITEM **items = (ITEM **) calloc(4, sizeof(ITEM *));
+    menu_items = (ITEM **) calloc(4, sizeof(ITEM *));
 
     for (int i = 0; i < 4; i++) {
-        items[i] = new_item(item_text_description[i][0], item_text_description[i][1]);
+        menu_items[i] = new_item(item_text_description[i][0], item_text_description[i][1]);
     }
 
-    return new_menu(items);
+    menu = new_menu(menu_items);
+
+    scale_menu(menu, &height, &width);
+}
+
+Menu::~Menu() {
+    free_menu(menu);
+    
+    for (int i = 0; i < 4; i++) {
+        free_item(menu_items[i]);
+    }
+
+    free(menu_items);
+}
+
+MENU *Menu::get_menu() {
+    return menu;
 }

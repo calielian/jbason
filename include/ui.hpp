@@ -8,7 +8,7 @@ void draw_app_name();
 
 class Menu {
     public:
-        int width, height;
+        int width, height, menu_itens_count;
 
         Menu();
         ~Menu();

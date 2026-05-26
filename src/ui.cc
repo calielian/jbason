@@ -40,21 +40,25 @@ void draw_app_name() {
 }
 
 Menu::Menu() {
-    const char *item_text_description[4][2] {
+    const char *item_text_description[5][2] {
         // Item text, item description
         "Query table content", "Write SELECT statements",
         "Insert new values into table", "Write INSERT_INTO statements",
         "Create new tables", "Write CREATE statements",
-        "Create a new database", "Create a new database"
+        "Create a new database", "Create a new database",
+        "Exit JbaSON", "Close JbaSON"
     };
 
-    menu_items = (ITEM **) calloc(4, sizeof(ITEM *));
+    menu_itens_count = sizeof(item_text_description) / sizeof(item_text_description[0]);
 
-    for (int i = 0; i < 4; i++) {
+    menu_items = (ITEM **) calloc(menu_itens_count + 1, sizeof(ITEM *));
+
+    for (int i = 0; i < menu_itens_count; i++) {
         menu_items[i] = new_item(item_text_description[i][0], item_text_description[i][1]);
     }
 
     menu = new_menu(menu_items);
+    set_menu_mark(menu, "> ");
 
     scale_menu(menu, &height, &width);
 }
@@ -62,7 +66,7 @@ Menu::Menu() {
 Menu::~Menu() {
     free_menu(menu);
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < menu_itens_count; i++) {
         free_item(menu_items[i]);
     }
 

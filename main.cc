@@ -28,20 +28,20 @@ int main() {
     getmaxyx(stdscr,terminal_max_y, terminal_max_x);
 
     Menu *menu = new Menu();
-
-    const int WIN_MENU_HEIGHT = menu->height * 2, WIN_MENU_WIDTH = menu->width + 5, WIN_MENU_PADDING = 2;
+    
+    const int WIN_MENU_HEIGHT = menu->height * 2 - 1, WIN_MENU_WIDTH = menu->width + 5, WIN_MENU_PADDING = 2;
 
     WINDOW *win_menu = newwin(WIN_MENU_HEIGHT, WIN_MENU_WIDTH, (terminal_max_y - WIN_MENU_HEIGHT )/2, (terminal_max_x - WIN_MENU_WIDTH)/2);
     set_menu_win(menu->get_menu(), win_menu);
     set_menu_sub(menu->get_menu(), derwin(win_menu, menu->height, menu->width + 1, WIN_MENU_PADDING, WIN_MENU_PADDING));
-    set_menu_mark(menu->get_menu(), "> ");
+    
 
     draw_app_name();
     move(terminal_max_y/2, 0);
 
     keypad(win_menu, TRUE);
     box(win_menu, 1, 0);
-    mvwaddstr(win_menu, 0, (WIN_MENU_WIDTH - strlen("Main Menu") - 1)/2 , "Main Menu");
+    mvwaddstr(win_menu, 0, (WIN_MENU_WIDTH - strlen("Main Menu"))/2 , "Main Menu");
 
     post_menu(menu->get_menu());
 
